@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Master Shoes - Próximamente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background gradient */
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #FF006E;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 80%; top: 60%; animation-delay: 3s; }
+        .particle:nth-child(3) { left: 30%; top: 70%; animation-delay: 6s; }
+        .particle:nth-child(4) { left: 70%; top: 30%; animation-delay: 9s; }
+        .particle:nth-child(5) { left: 50%; top: 50%; animation-delay: 12s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-30px) translateX(20px); }
+            50% { transform: translateY(-60px) translateX(-20px); }
+            75% { transform: translateY(-30px) translateX(20px); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            max-width: 90%;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: pulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 110, 0.5));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .brand-name {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #FF006E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: #999;
+            margin-bottom: 40px;
+            font-weight: 300;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .coming-soon {
+            position: relative;
+            display: inline-block;
+            padding: 20px 50px;
+            margin: 30px 0;
+            border: 2px solid #FF006E;
+            border-radius: 50px;
+            animation: fadeInUp 1.4s ease-out;
+            overflow: hidden;
+        }
+
+        .coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .coming-soon-text {
+            font-size: 28px;
+            font-weight: 600;
+            color: #FF006E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            animation: fadeInUp 1.6s ease-out;
+        }
+
+        .highlight {
+            color: #FF006E;
+            font-weight: 600;
+        }
+
+        .dots {
+            display: inline-block;
+            width: 20px;
+        }
+
+        .dots span {
+            animation: blink 1.4s infinite;
+            opacity: 0;
+        }
+
+        .dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Contact info */
+        .contact {
+            margin-top: 60px;
+            animation: fadeInUp 1.8s ease-out;
+        }
+
+        .contact-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            border-radius: 25px;
+            color: #FF006E;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 0, 110, 0.2);
+            border-color: #FF006E;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 0, 110, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 60px;
+            }
+
+            .brand-name {
+                font-size: 32px;
+            }
+
+            .tagline {
+                font-size: 16px;
+            }
+
+            .coming-soon-text {
+                font-size: 22px;
+            }
+
+            .message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <!-- Floating particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <div class="container">
+        <div class="logo">👟</div>
+        
+        <h1 class="brand-name">CLEAN MASTER SHOES</h1>
+        
+        <p class="tagline">Expertos en limpieza profesional de sneakers</p>
+        
+        <div class="coming-soon">
+            <div class="coming-soon-text">PRÓXIMAMENTE</div>
+        </div>
+        
+        <p class="message">
+            Estamos trabajando en algo <span class="highlight">increíble</span> para ti<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+            <br><br>
+            Nuestro nuevo sitio web estará disponible muy pronto con toda la información 
+            sobre nuestros servicios de <span class="highlight">limpieza premium</span> para tus sneakers favoritos.
+        </p>
+
+        <div class="contact">
+            <p class="contact-text">Mientras tanto, síguenos en redes sociales:</p>
+            <div class="social-links">
+                <a href="#" class="social-link">📱 Instagram</a>
+                <a href="#" class="social-link">📘 Facebook</a>
+                <a href="#" class="social-link">💬 WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
