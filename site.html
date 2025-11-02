@@ -91,8 +91,8 @@
             border-radius: 50%;
             background: rgba(255, 0, 110, 0.3);
             margin: auto;
-            transform: scale(0.75);
-            opacity: 0.3;
+            transform: scale(0.5);
+            opacity: 0.2;
         }
 
         /* Hero Section */
@@ -1128,18 +1128,18 @@
         anime({
             targets: '.dot',
             keyframes: [
-                { scale: 5, opacity: 0.8 },        // Máximo (cuando llega la onda)
-                { scale: 0.5, opacity: 0.2 },      // Mínimo (mientras otros crecen)
-                { scale: 0.75, opacity: 0.3 }      // Regreso al inicio (cierra el ciclo)
+                { scale: 0.5, opacity: 0.2, duration: 0 },          // Empieza pequeño
+                { scale: 5, opacity: 0.8, duration: 500 },          // Crece rápido (20% del tiempo)
+                { scale: 5, opacity: 0.8, duration: 1500 },         // Se mantiene grande (60% del tiempo)
+                { scale: 0.5, opacity: 0.2, duration: 500 }         // Termina pequeño (20% del tiempo)
             ],
-            duration: 2500,
             easing: 'easeInOutQuad',
             loop: true,
             delay: anime.stagger(80, {
                 grid: [13, 13],
                 from: 'center'
             }),
-            endDelay: anime.stagger(80, {
+            endDelay: anime.stagger(0, {
                 grid: [13, 13],
                 from: 'center',
                 direction: 'reverse'
