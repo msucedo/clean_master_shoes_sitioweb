@@ -97,6 +97,15 @@
             border-radius: 50px;
             animation: fadeInUp 1.4s ease-out;
             overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .coming-soon:hover {
+            background: rgba(255, 0, 110, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
         }
 
         .coming-soon::before {
@@ -247,9 +256,9 @@
         
         <p class="tagline">Expertos en limpieza profesional de tu calzado</p>
         
-        <div class="coming-soon">
+        <a href="site.html" class="coming-soon">
             <div class="coming-soon-text">PRÓXIMAMENTE</div>
-        </div>
+        </a>
         
         <p class="message">
             <br><br>
