@@ -1,0 +1,15 @@
+{
+  "name": "clean-master-shoes",
+  "version": "1.0.0",
+  "description": "Clean Master Shoes - Limpieza Profesional de Calzado",
+  "main": "site.html",
+  "scripts": {
+    "start": "open site.html"
+  },
+  "keywords": ["shoes", "cleaning", "animation", "animejs"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animejs": "^3.2.2"
+  }
+}
