@@ -42,20 +42,9 @@
             background: radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.08) 0%, transparent 50%),
                         radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.05) 0%, transparent 50%);
-            animation: gradientShift 15s ease-in-out infinite;
+            opacity: 0.6;
             pointer-events: none;
             z-index: 0;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { 
-                opacity: 0.6;
-                transform: scale(1) rotate(0deg);
-            }
-            50% { 
-                opacity: 1;
-                transform: scale(1.1) rotate(5deg);
-            }
         }
 
         /* tsParticles */
@@ -75,8 +64,8 @@
             width: 100%;
             height: 100%;
             display: grid;
-            grid-template-columns: repeat(13, 1fr);
-            grid-template-rows: repeat(13, 1fr);
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
             gap: 0;
             z-index: 0;
             top: 0;
@@ -265,14 +254,15 @@
 
         /* Services Grid */
         .services-grid {
+            opacity: 0.9;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
         .service-card {
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 0, 110, 0.1);
             border-radius: 20px;
             padding: 40px;
@@ -506,8 +496,8 @@
         }
 
         .pricing-card {
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 0, 110, 0.1);
             border-radius: 20px;
             padding: 40px;
@@ -614,15 +604,22 @@
 
         /* Contact Section */
         .contact-grid {
+            opacity: 0.9;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
 
+        .contact-info-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
         .contact-info {
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 0, 110, 0.1);
             border-radius: 20px;
             padding: 30px;
@@ -665,47 +662,21 @@
             font-size: 14px;
         }
 
-        .contact-form {
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(10px);
+        .map-wrapper {
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 0, 110, 0.1);
             border-radius: 20px;
-            padding: 40px;
+            padding: 20px;
+            overflow: hidden;
         }
 
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--neon-pink);
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        .contact-map {
             width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
+            height: 400px;
+            border-radius: 15px;
             border: 1px solid rgba(255, 0, 110, 0.2);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.2);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
+            filter: grayscale(0.2) contrast(1.1);
         }
 
         /* Footer */
@@ -899,33 +870,53 @@
             <div class="services-grid">
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">✨</div>
-                    <h3>Limpieza Básica</h3>
-                    <p>Limpieza profunda de tu calzado, eliminando suciedad superficial y manchas comunes con productos especializados.</p>
+                    <h3>Limpieza Clásica</h3>
+                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">🔬</div>
-                    <h3>Limpieza Premium</h3>
-                    <p>Tratamiento profesional que incluye limpieza profunda, desinfección, hidratación y protección del material.</p>
+                    <h3>Limpieza de calzado de color</h3>
+                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">🎨</div>
-                    <h3>Restauración</h3>
-                    <p>Recuperamos el color original de tus zapatos, reparamos daños y restauramos su apariencia como nuevos.</p>
+                    <h3>Limpieza de botas y medias botas</h3>
+                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">🛡️</div>
-                    <h3>Protección</h3>
-                    <p>Aplicamos tratamientos protectores que repelen agua, manchas y suciedad para mantener tus zapatos impecables.</p>
+                    <h3>Limpieza de calzado blanco y gamuza</h3>
+                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">👟</div>
-                    <h3>Sneakers Premium</h3>
-                    <p>Servicio especializado para tenis y sneakers de colección con técnicas y productos de gama alta.</p>
+                    <h3>Limpieza de calzado premium</h3>
+                    <p>Limpieza detallada, aromatizante, repelente de agua y bolsa de sílice (Obligatorio para calzado de alta gama)</p>
                 </div>
                 <div class="service-card animate-on-scroll">
                     <div class="service-icon">💼</div>
-                    <h3>Calzado Formal</h3>
-                    <p>Cuidado profesional para zapatos de vestir, botas y calzado de cuero fino con acabados impecables.</p>
+                    <h3>Limpieza de gorras</h3>
+                    <p>Limpieza interior, exterior y aromatizante.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">💼</div>
+                    <h3>Boleado</h3>
+                    <p>Limpieza interior, exterior y aromatizante.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">💼</div>
+                    <h3>Limpieza de bolsas y mochilas</h3>
+                    <p>Limpieza interior, exterior y aromatizante.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">💼</div>
+                    <h3>Servicio express</h3>
+                    <p>24hrs máximo por par</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">💼</div>
+                    <h3>Blanqueamiento de suela</h3>
+                    <p>Limpieza exterior y aromatizante.</p>
                 </div>
             </div>
         </div>
@@ -990,41 +981,39 @@
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card animate-on-scroll">
-                    <h3>Básico</h3>
-                    <div class="price">$150<span>/par</span></div>
+                    <h3>Limpieza clásica</h3>
+                    <div class="price">$100<span>/par</span></div>
                     <ul class="features">
-                        <li>Limpieza superficial</li>
-                        <li>Eliminación de manchas básicas</li>
-                        <li>Desodorización</li>
-                        <li>Tiempo: 24 hrs</li>
+                        <li>Limpieza interior</li>
+                        <li>Limpieza exterior</li>
+                        <li>Limpieza de suela</li>
+                        <li>Aromatizante</li>
                     </ul>
                     <a href="#contacto" class="btn btn-secondary">Solicitar</a>
                 </div>
                 <div class="pricing-card featured animate-on-scroll">
                     <div class="pricing-badge">MÁS POPULAR</div>
-                    <h3>Premium</h3>
-                    <div class="price">$300<span>/par</span></div>
+                    <h3>Servicio express</h3>
+                    <div class="price">$50<span>/extra por par</span></div>
                     <ul class="features">
-                        <li>Limpieza profunda profesional</li>
-                        <li>Tratamiento especializado</li>
-                        <li>Hidratación del material</li>
-                        <li>Protección anti-manchas</li>
-                        <li>Desinfección completa</li>
-                        <li>Tiempo: 48 hrs</li>
+                        <li>24hrs máximo por par</li>
+                        <li>Limpieza interior</li>
+                        <li>Limpieza exterior</li>
+                        <li>Limpieza de suela</li>
+                        <li>Aromatizante</li>
                     </ul>
                     <a href="#contacto" class="btn btn-primary">Solicitar</a>
                 </div>
                 <div class="pricing-card animate-on-scroll">
-                    <h3>Deluxe</h3>
-                    <div class="price">$500<span>/par</span></div>
+                    <h3>Limpieza premium</h3>
+                    <div class="price">$150<span>/par</span></div>
                     <ul class="features">
-                        <li>Todo lo de Premium</li>
-                        <li>Restauración de color</li>
-                        <li>Reparaciones menores</li>
-                        <li>Tratamiento premium</li>
-                        <li>Recolección y entrega</li>
-                        <li>Garantía extendida</li>
-                        <li>Tiempo: 72 hrs</li>
+                        <li>Limpieza detallada</li>
+                        <li>Aromatizante</li>
+                        <li>Repelente de agua</li>
+                        <li>Bolsa de sílice</li>
+                        <li>Limpieza exterior</li>
+                        <li>Limpieza de suela</li>
                     </ul>
                     <a href="#contacto" class="btn btn-secondary">Solicitar</a>
                 </div>
@@ -1040,56 +1029,47 @@
                 <p>Estamos listos para devolver la vida a tu calzado</p>
             </div>
             <div class="contact-grid">
-                <div class="contact-info animate-on-scroll">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <h4>Ubicación</h4>
-                            <p>Colima, Col., México</p>
+                <div class="contact-info-wrapper">
+                    <div class="contact-info animate-on-scroll">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <h4>Ubicación</h4>
+                                <p>Avenida Venustiano Carranza 1061 A, Colinas de Santa Barbara, Sta Bárbara, 28017 Colima, Col.</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <h4>Teléfono</h4>
+                                <p>+52 312-213-9534</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>Cleanmastershoes@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⏰</div>
+                            <div>
+                                <h4>Horario</h4>
+                                <p>Lun - Vie: 10:00 AM - 6:00 PM</p>
+                                <p>Sabado: 10:00 AM - 4:00 PM</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div>
-                            <h4>Teléfono</h4>
-                            <p>+52 123 456 7890</p>
-                        </div>
+                    <div class="map-wrapper animate-on-scroll">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.6076200399712!2d-103.71874969999999!3d19.2636371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255bb4d60eec79%3A0x7e9c9d5cc62414d1!2sClean%20Master%20Shoes!5e0!3m2!1ses-419!2smx!4v1762151426490!5m2!1ses-419!2smx"
+                            class="contact-map"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>info@cleanmastershoes.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">⏰</div>
-                        <div>
-                            <h4>Horario</h4>
-                            <p>Lun - Sáb: 9:00 AM - 7:00 PM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form animate-on-scroll">
-                    <form>
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input type="text" placeholder="Tu nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="tu@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Teléfono</label>
-                            <input type="tel" placeholder="Tu teléfono">
-                        </div>
-                        <div class="form-group">
-                            <label>Mensaje</label>
-                            <textarea placeholder="Cuéntanos qué necesitas..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensaje</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -1114,10 +1094,10 @@
     <script>
         // Create dots grid with anime.js
         const dotsGrid = document.querySelector('.dots-grid');
-        const gridSize = 13;
+        const gridSize = 20;
         const totalDots = gridSize * gridSize;
 
-        // Generate 169 dots (13x13)
+        // Generate 400 dots (20x20)
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('div');
             dot.className = 'dot';
@@ -1127,23 +1107,26 @@
         // Create pulse animation from center outward with inverse breathing effect
         anime({
             targets: '.dot',
-            keyframes: [
-                { scale: 0.5, opacity: 0.2, duration: 0 },          // Empieza pequeño
-                { scale: 5, opacity: 0.8, duration: 500 },          // Crece rápido (20% del tiempo)
-                { scale: 5, opacity: 0.8, duration: 1500 },         // Se mantiene grande (60% del tiempo)
-                { scale: 0.5, opacity: 0.2, duration: 500 }         // Termina pequeño (20% del tiempo)
+            scale: [
+                { value: 5, duration: 320 },
+                { value: 0.5, duration: 320 },
+                { value: 5, duration: 320 },
+                { value: 0.5, duration: 320 },
+                { value: 5, duration: 320 },
+                { value: 0.5, duration: 320 }
+            ],
+            opacity: [
+                { value: 0.2 },
+                { value: 0.8, duration: 320 },
+                { value: 0.2, duration: 320 }
             ],
             easing: 'easeInOutQuad',
             loop: true,
-            delay: anime.stagger(80, {
-                grid: [13, 13],
+            delay: anime.stagger(800, {
+                grid: [20, 20],
                 from: 'center'
             }),
-            endDelay: anime.stagger(0, {
-                grid: [13, 13],
-                from: 'center',
-                direction: 'reverse'
-            })
+            endDelay: 0
         });
 
         // Initialize tsParticles (optimized for better performance)
@@ -1182,9 +1165,9 @@
                 },
                 links: {
                     color: "#FF006E",
-                    distance: 120, // Reduced from 150
+                    distance: 120,
                     enable: true,
-                    opacity: 0.15, // Reduced from 0.2
+                    opacity: 0.25,
                     width: 1,
                 },
                 move: {
@@ -1194,31 +1177,37 @@
                         default: "bounce",
                     },
                     random: true,
-                    speed: 1, // Reduced from 1.5
+                    speed: 1.5,
                     straight: false,
                 },
                 number: {
                     density: {
                         enable: true,
-                        area: 1000, // Increased area = fewer particles
+                        area: 800,
                     },
-                    value: 40, // Reduced from 60
+                    value: 100,
                 },
                 opacity: {
-                    value: 0.4, // Reduced from 0.5
+                    value: 0.6,
                     random: true,
                     anim: {
-                        enable: false, // Disabled animation for better performance
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.3,
+                        sync: false
                     }
                 },
                 shape: {
                     type: "circle",
                 },
                 size: {
-                    value: { min: 1, max: 3 }, // Reduced from 4
+                    value: { min: 1, max: 4 },
                     random: true,
                     anim: {
-                        enable: false, // Disabled animation for better performance
+                        enable: true,
+                        speed: 2,
+                        size_min: 1,
+                        sync: false
                     }
                 },
             },
@@ -1270,13 +1259,6 @@
         // Observe all elements with animate-on-scroll class
         document.querySelectorAll('.animate-on-scroll').forEach(element => {
             observer.observe(element);
-        });
-
-        // Form submission
-        document.querySelector('form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
-            e.target.reset();
         });
     </script>
 </body>
