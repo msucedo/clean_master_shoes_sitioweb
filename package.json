@@ -2,9 +2,10 @@
   "name": "clean-master-shoes",
   "version": "1.0.0",
   "description": "Clean Master Shoes - Limpieza Profesional de Calzado",
-  "main": "site.html",
+  "main": "index.html",
   "scripts": {
-    "start": "open site.html"
+    "start": "npx http-server . -p 8080 -o",
+    "dev": "npx http-server . -p 8080 -c-1"
   },
   "keywords": ["shoes", "cleaning", "animation", "animejs"],
   "author": "",
