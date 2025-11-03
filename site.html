@@ -679,6 +679,31 @@
             filter: grayscale(0.2) contrast(1.1);
         }
 
+        /* Scroll Spiral SVG */
+        .scroll-spiral {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .scroll-spiral svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .spiral-path {
+            stroke: var(--neon-pink);
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.7));
+            stroke-linecap: round;
+        }
+
         /* Footer */
         footer {
             background: rgba(10, 10, 10, 0.95);
@@ -845,6 +870,48 @@
 <body>
     <div class="bg-gradient"></div>
     <div id="tsparticles"></div>
+
+    <!-- Scroll-controlled spiral -->
+    <div class="scroll-spiral">
+        <svg viewBox="0 0 200 10000" preserveAspectRatio="xMidYMin meet">
+            <path class="spiral-path" d="M100,0
+                Q150,200 100,400
+                Q50,600 100,800
+                Q150,1000 100,1200
+                Q50,1400 100,1600
+                Q150,1800 100,2000
+
+                Q30,2080 40,2140
+                Q60,2190 90,2170
+                Q120,2150 140,2180
+                Q160,2210 170,2260
+                Q175,2320 160,2370
+                Q140,2420 110,2410
+                Q80,2400 60,2430
+                Q40,2460 50,2510
+                Q70,2560 100,2580
+
+                Q150,2700 100,2900
+                Q50,3100 100,3300
+                Q150,3500 100,3700
+                Q50,3900 100,4100
+                Q150,4300 100,4500
+                Q50,4700 100,4900
+                Q150,5100 100,5300
+                Q50,5500 100,5700
+                Q150,5900 100,6100
+                Q50,6300 100,6500
+                Q150,6700 100,6900
+                Q50,7100 100,7300
+                Q150,7500 100,7700
+                Q50,7900 100,8100
+                Q150,8300 100,8500
+                Q50,8700 100,8900
+                Q150,9100 100,9300
+                Q50,9500 100,9700
+                Q150,9900 100,10000"></path>
+        </svg>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
@@ -1260,6 +1327,36 @@
         document.querySelectorAll('.animate-on-scroll').forEach(element => {
             observer.observe(element);
         });
+
+        // Spiral SVG controlled by scroll progress
+        const initScrollSpiral = () => {
+            const spiralPath = document.querySelector('.spiral-path');
+            if (!spiralPath) return;
+
+            const length = spiralPath.getTotalLength();
+            spiralPath.style.strokeDasharray = length;
+            spiralPath.style.strokeDashoffset = length;
+
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const scrollPercent = scrollTop / docHeight;
+                        const drawLength = length * scrollPercent;
+
+                        spiralPath.style.strokeDashoffset = length - drawLength;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        };
+
+        // Initialize spiral
+        initScrollSpiral();
     </script>
 </body>
 </html>
