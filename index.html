@@ -469,20 +469,22 @@
             });
         }
 
-        // Button fill animation on click
+        // Simple GSAP page transition
         const ctaLink = document.getElementById('ctaLink');
         if (ctaLink) {
             ctaLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 const href = ctaLink.getAttribute('href');
 
-                // Trigger CSS fill effect
-                ctaLink.classList.add('active');
-
-                // Navigate after animation completes
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500);
+                // Simple fade out
+                gsap.to(document.body, {
+                    opacity: 0,
+                    duration: 1.0,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        window.location.href = href;
+                    }
+                });
             });
         }
 
