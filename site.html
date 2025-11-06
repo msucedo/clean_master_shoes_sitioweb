@@ -619,6 +619,17 @@
             overflow: hidden;
         }
 
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
         .gallery-item::before {
             content: '';
             position: absolute;
@@ -1265,12 +1276,24 @@
                 <p class="section-description">Resultados que hablan por sí mismos</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item animate-on-scroll">👟</div>
-                <div class="gallery-item animate-on-scroll">👠</div>
-                <div class="gallery-item animate-on-scroll">👞</div>
-                <div class="gallery-item animate-on-scroll">🥾</div>
-                <div class="gallery-item animate-on-scroll">👢</div>
-                <div class="gallery-item animate-on-scroll">🩴</div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto1.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto2.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto3.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto4.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto5.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="/public/gallery/foto6.jpg" alt="Trabajo de limpieza de calzado">
+                </div>
             </div>
         </div>
     </section>
@@ -1631,6 +1654,40 @@
 
             // Observar cada item
             featureObserver.observe(item);
+        });
+
+        // Gallery Items Animation with GSAP
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const item = entry.target;
+
+                    // Animar el contenedor completo
+                    gsap.to(item, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1,
+                        delay: 0.2,
+                        ease: "power3.out"
+                    });
+
+                    // Dejar de observar este item
+                    galleryObserver.unobserve(item);
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Establecer posiciones iniciales con GSAP alternando izquierda/derecha
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+            // Alternar dirección: impares desde izquierda, pares desde derecha
+            const startX = (index % 2 === 0) ? -100 : 100;
+            gsap.set(item, { x: startX, opacity: 0 });
+
+            // Observar cada item
+            galleryObserver.observe(item);
         });
 
         // Hero animations on page load
