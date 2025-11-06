@@ -1,16 +1,14 @@
 {
   "name": "clean-master-shoes",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Clean Master Shoes - Limpieza Profesional de Calzado",
   "main": "index.html",
   "scripts": {
     "start": "npx http-server . -p 8080 -o",
     "dev": "npx http-server . -p 8080 -c-1"
   },
-  "keywords": ["shoes", "cleaning", "animation", "animejs"],
+  "keywords": ["shoes", "cleaning", "elegant", "classic"],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "animejs": "^3.2.2"
-  }
+  "dependencies": {}
 }

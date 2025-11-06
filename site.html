@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clean Master Shoes - Limpieza Profesional de Calzado</title>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,11 +15,14 @@
         }
 
         :root {
-            --neon-pink: #FF006E;
-            --neon-pink-light: #ff3385;
-            --dark-bg: #0a0a0a;
-            --dark-secondary: #1a1a1a;
-            --text-light: #999;
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #1a1a1a;
+            --tertiary-dark: #2a2a2a;
+            --accent-silver: #C0C0C0;
+            --accent-light: #E8E8E8;
+            --text-muted: #888;
+            --border-elegant: rgba(192, 192, 192, 0.2);
+            --glow-silver: rgba(192, 192, 192, 0.5);
         }
 
         html {
@@ -26,62 +30,111 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--dark-bg);
-            color: #fff;
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--primary-dark);
+            color: var(--accent-light);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Animated background */
-        .bg-gradient {
+        /* Elegant background texture */
+        body::before {
+            content: '';
             position: fixed;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.05) 0%, transparent 50%);
-            opacity: 0.6;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(192, 192, 192, 0.015) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* tsParticles */
-        #tsparticles {
+        /* Navigation */
+        nav {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-            z-index: 1;
-            pointer-events: none;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-elegant);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: padding 0.3s ease;
         }
 
-        /* Dots grid animation */
-        .dots-grid {
+        nav.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--accent-silver);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(20, 1fr);
-            grid-template-rows: repeat(20, 1fr);
-            gap: 0;
-            z-index: 0;
-            top: 0;
+            bottom: -5px;
             left: 0;
-            padding: 10px;
-            pointer-events: none;
+            width: 0;
+            height: 1px;
+            background: var(--accent-silver);
+            transition: width 0.3s ease;
         }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 0, 110, 0.3);
-            margin: auto;
-            transform: scale(0.5);
-            opacity: 0.2;
+        .nav-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-light);
+            font-size: 24px;
+            cursor: pointer;
         }
 
         /* Hero Section */
@@ -91,504 +144,523 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 50px 30px;
+            padding: 120px 40px 60px;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             position: relative;
-            z-index: 10;
         }
 
-        .hero-icon {
-            width: 150px;
+        .hero-logo {
+            width: 160px;
             height: auto;
-            animation: hero-icon-combined 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(255, 0, 110, 0.6));
-            margin-bottom: 30px;
-            display: inline-block;
-            will-change: transform, filter;
-            transform: translateZ(0);
+            margin-bottom: 50px;
+            filter: drop-shadow(0 0 30px rgba(192, 192, 192, 0.3));
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        @keyframes hero-icon-combined {
-            0%, 100% {
-                transform: translateY(0px) scale(1) translateZ(0);
-                filter: drop-shadow(0 0 40px rgba(255, 0, 110, 0.6));
-            }
-            25% {
-                transform: translateY(-15px) scale(1.05) translateZ(0);
-                filter: drop-shadow(0 0 50px rgba(255, 0, 110, 0.7));
-            }
-            50% {
-                transform: translateY(-20px) scale(1.08) translateZ(0);
-                filter: drop-shadow(0 0 60px rgba(255, 0, 110, 0.9));
-            }
-            75% {
-                transform: translateY(-15px) scale(1.05) translateZ(0);
-                filter: drop-shadow(0 0 50px rgba(255, 0, 110, 0.7));
-            }
+        .hero-logo.animate {
+            animation: fadeInUp 1s ease-out forwards;
         }
 
         .hero h1 {
-            font-size: 64px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, var(--neon-pink) 50%, #fff 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out, gradient-wave 5s ease infinite;
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--accent-light);
+            letter-spacing: 3px;
             line-height: 1.2;
-            will-change: background-position;
-            transform: translateZ(0);
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        @keyframes gradient-wave {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .hero h1.animate {
+            animation: fadeInUp 1s ease-out 0.2s forwards;
         }
 
-        .hero p {
-            font-size: 24px;
-            color: var(--text-light);
-            margin-bottom: 40px;
-            animation: fadeInUp 1.2s ease-out;
-            transform: translateZ(0);
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-subtitle.animate {
+            animation: fadeInUp 1s ease-out 0.4s forwards;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
             flex-wrap: wrap;
-            animation: fadeInUp 1.4s ease-out;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .cta-buttons.animate {
+            animation: fadeInUp 1s ease-out 0.6s forwards;
         }
 
         .btn {
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-size: 16px;
+            padding: 18px 50px;
+            font-size: 13px;
             font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            border: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            will-change: transform;
-            transform: translateZ(0);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-pink-light) 100%);
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+            background: var(--accent-silver);
+            color: var(--primary-dark);
+            border: 1px solid var(--accent-silver);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.03) translateZ(0);
-            box-shadow: 0 20px 50px rgba(255, 0, 110, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--neon-pink);
-            border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 10px rgba(255, 0, 110, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 0, 110, 0.1);
-            transform: translateY(-3px) scale(1.03) translateZ(0);
-            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Sections */
-        section {
-            position: relative;
-            z-index: 2;
-            padding: 100px 30px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, var(--neon-pink) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-header p {
-            font-size: 18px;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Services Grid */
-        .services-grid {
-            opacity: 0.9;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background: rgba(26, 26, 26, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 110, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: card-float 6s ease-in-out infinite;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-
-        @keyframes card-float {
-            0%, 100% { transform: translateY(0px) translateZ(0); }
-            50% { transform: translateY(-8px) translateZ(0); }
-        }
-
-        .service-card:nth-child(even) {
-            animation: card-float-reverse 6s ease-in-out infinite;
-        }
-
-        @keyframes card-float-reverse {
-            0%, 100% { transform: translateY(0px) translateZ(0); }
-            50% { transform: translateY(-8px) translateZ(0); }
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 110, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            animation: rotate-bg 10s linear infinite;
-        }
-
-        @keyframes rotate-bg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            border-color: var(--neon-pink);
-            box-shadow: 0 25px 70px rgba(255, 0, 110, 0.4);
-            animation-play-state: paused;
-            transform: translateY(-15px) scale(1.05) translateZ(0);
-        }
-
-        .service-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px rgba(255, 0, 110, 0.4));
-            display: inline-block;
-            animation: icon-bounce 4s ease-in-out infinite;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform, filter;
-            transform: translateZ(0);
-        }
-
-        @keyframes icon-bounce {
-            0%, 100% {
-                transform: translateY(0px) scale(1) translateZ(0);
-            }
-            50% {
-                transform: translateY(-8px) scale(1.1) translateZ(0);
-            }
-        }
-
-        .service-card:hover .service-icon {
-            filter: drop-shadow(0 0 40px rgba(255, 0, 110, 0.8));
-            transform: scale(1.15) translateZ(0);
-            animation-play-state: paused;
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Process Section */
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .step {
-            text-align: center;
-            padding: 30px;
-            position: relative;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-pink-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            font-weight: 700;
-            margin: 0 auto 20px;
-            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
-            position: relative;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-
-        .step-number::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            filter: blur(15px);
-            opacity: 0.5;
-            z-index: -1;
-        }
-
-        .step h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .step p {
-            color: var(--text-light);
-        }
-
-        /* Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 50px;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2) 0%, rgba(255, 0, 110, 0.05) 100%);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 0, 110, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: gallery-float 5s ease-in-out infinite;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-
-        .gallery-item:nth-child(odd) {
-            animation: gallery-float 5s ease-in-out infinite;
-        }
-
-        .gallery-item:nth-child(even) {
-            animation: gallery-float-reverse 5s ease-in-out infinite;
-        }
-
-        @keyframes gallery-float {
-            0%, 100% {
-                transform: translateY(0px) translateZ(0);
-            }
-            50% {
-                transform: translateY(-10px) translateZ(0);
-            }
-        }
-
-        @keyframes gallery-float-reverse {
-            0%, 100% {
-                transform: translateY(0px) translateZ(0);
-            }
-            50% {
-                transform: translateY(-10px) translateZ(0);
-            }
-        }
-
-        .gallery-item::before {
+        .btn-primary::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.3), transparent);
-            transition: left 0.5s;
-            animation: shine-move 3s linear infinite;
+            background: var(--accent-light);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
         }
 
-        @keyframes shine-move {
-            0% { left: -100%; }
-            100% { left: 200%; }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(192, 192, 192, 0.4);
         }
 
-        .gallery-item:hover::before {
-            left: 100%;
+        .btn-primary:hover::before {
+            left: 0;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.12) translateZ(0);
-            box-shadow: 0 25px 70px rgba(255, 0, 110, 0.5);
-            filter: brightness(1.3);
-            animation-play-state: paused;
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-light);
+            border: 1px solid var(--accent-silver);
         }
 
-        /* Pricing */
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-silver);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn-secondary:hover {
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(192, 192, 192, 0.3);
+        }
+
+        .btn-secondary:hover::before {
+            left: 0;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--border-elegant);
+            border-radius: 20px;
+            opacity: 0;
+        }
+
+        .scroll-indicator.animate {
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: var(--accent-silver);
+            border-radius: 2px;
+            animation: scroll-down 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-down {
+            0%, 100% {
+                top: 10px;
+                opacity: 1;
+            }
+            50% {
+                top: 25px;
+                opacity: 0.3;
+            }
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            padding: 120px 40px;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .section-label {
+            font-size: 12px;
+            color: var(--accent-silver);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--accent-light);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 1px;
+            background: var(--accent-silver);
+            box-shadow: 0 0 15px var(--glow-silver);
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 30px auto 0;
+            line-height: 1.8;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: var(--accent-light);
+            letter-spacing: 1px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background: var(--secondary-dark);
+            padding: 30px;
+            border: 1px solid var(--border-elegant);
+            border-radius: 5px;
+            transition: all 0.4s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent-silver);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-item h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+            letter-spacing: 1px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            padding: 45px 35px;
+            border-radius: 5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-silver), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-silver);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            transform: translateY(-8px);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 25px;
+            display: block;
+            filter: grayscale(0.3);
+        }
+
+        .service-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--accent-light);
+            letter-spacing: 0.5px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Process Timeline */
+        .process-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border-elegant);
+            transform: translateX(-50%);
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        .step-content {
+            text-align: right;
+            padding: 30px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            border-radius: 5px;
+            transition: all 0.4s ease;
+        }
+
+        .process-step:nth-child(even) .step-content {
+            text-align: left;
+            grid-column: 3;
+        }
+
+        .process-step:nth-child(even) .step-number {
+            grid-column: 2;
+        }
+
+        .process-step:nth-child(even) .step-placeholder {
+            grid-column: 1;
+        }
+
+        .step-content:hover {
+            border-color: var(--accent-silver);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--secondary-dark);
+            border: 2px solid var(--accent-silver);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-silver);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 0 8px var(--primary-dark);
+        }
+
+        .step-content h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--accent-light);
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Pricing Cards */
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .pricing-card {
-            background: rgba(26, 26, 26, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 110, 0.1);
-            border-radius: 20px;
-            padding: 40px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            padding: 50px 40px;
+            border-radius: 5px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            animation: pricing-levitate 4s ease-in-out infinite;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-
-        @keyframes pricing-levitate {
-            0%, 100% {
-                transform: translateY(0px) translateZ(0);
-                box-shadow: 0 5px 20px rgba(255, 0, 110, 0.1);
-            }
-            50% {
-                transform: translateY(-8px) translateZ(0);
-                box-shadow: 0 15px 40px rgba(255, 0, 110, 0.2);
-            }
         }
 
         .pricing-card.featured {
-            border-color: var(--neon-pink);
-            transform: scale(1.05) translateZ(0);
-            box-shadow: 0 20px 60px rgba(255, 0, 110, 0.3);
-            animation: pricing-featured 4s ease-in-out infinite;
-        }
-
-        @keyframes pricing-featured {
-            0%, 100% {
-                transform: scale(1.05) translateY(0px) translateZ(0);
-                box-shadow: 0 20px 60px rgba(255, 0, 110, 0.3);
-            }
-            50% {
-                transform: scale(1.05) translateY(-10px) translateZ(0);
-                box-shadow: 0 30px 80px rgba(255, 0, 110, 0.5);
-            }
+            border-color: var(--accent-silver);
+            transform: scale(1.05);
         }
 
         .pricing-card:hover {
-            transform: translateY(-12px) scale(1.06) translateZ(0);
-            border-color: var(--neon-pink);
-            animation-play-state: paused;
+            border-color: var(--accent-silver);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform: translateY(-10px) scale(1.02);
         }
 
         .pricing-badge {
             position: absolute;
             top: -15px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-pink-light) 100%);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            box-shadow: 0 5px 20px rgba(255, 0, 110, 0.4);
-            will-change: transform;
-            transform: translateZ(0);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-silver);
+            color: var(--primary-dark);
+            padding: 8px 25px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .pricing-card h3 {
-            font-size: 28px;
-            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-light);
+            letter-spacing: 1px;
         }
 
         .price {
-            font-size: 48px;
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
             font-weight: 700;
-            color: var(--neon-pink);
-            margin: 20px 0;
-            text-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
-            will-change: transform;
-            transform: translateZ(0);
+            color: var(--accent-silver);
+            margin: 25px 0;
         }
 
         .price span {
-            font-size: 20px;
-            color: var(--text-light);
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .features {
             list-style: none;
-            margin: 30px 0;
+            margin: 35px 0;
             text-align: left;
         }
 
         .features li {
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 0, 110, 0.1);
-            color: var(--text-light);
+            border-bottom: 1px solid var(--border-elegant);
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
         .features li:last-child {
@@ -597,40 +669,147 @@
 
         .features li::before {
             content: '✓';
-            color: var(--neon-pink);
+            color: var(--accent-silver);
             font-weight: 700;
-            margin-right: 10px;
+            margin-right: 12px;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent-silver);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            padding: 45px;
+            border-radius: 5px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            color: var(--border-elegant);
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--accent-silver);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--tertiary-dark);
+            border: 1px solid var(--border-elegant);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .author-info h4 {
+            font-size: 15px;
+            color: var(--accent-light);
+            margin-bottom: 3px;
+        }
+
+        .author-info p {
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
         /* Contact Section */
-        .contact-grid {
-            opacity: 0.9;
+        .contact-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .contact-info-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .contact-info {
-            background: rgba(26, 26, 26, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 110, 0.1);
-            border-radius: 20px;
-            padding: 30px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
+            padding: 50px;
+            border-radius: 5px;
         }
 
         .contact-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 0, 110, 0.1);
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-elegant);
         }
 
         .contact-item:last-child {
@@ -638,170 +817,206 @@
         }
 
         .contact-icon {
-            font-size: 30px;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.5));
-            display: inline-block;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform, filter;
-            transform: translateZ(0);
-        }
-
-        .contact-item:hover .contact-icon {
-            filter: drop-shadow(0 0 30px rgba(255, 0, 110, 0.9));
-            transform: scale(1.2) translateZ(0);
+            font-size: 28px;
+            margin-top: 5px;
         }
 
         .contact-item h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-            color: var(--neon-pink);
+            font-size: 14px;
+            color: var(--accent-silver);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .contact-item p {
-            color: var(--text-light);
-            font-size: 14px;
+        .contact-item p,
+        .contact-item a {
+            color: var(--text-muted);
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-light);
         }
 
         .map-wrapper {
-            background: rgba(26, 26, 26, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 110, 0.1);
-            border-radius: 20px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-elegant);
             padding: 20px;
-            overflow: hidden;
+            border-radius: 5px;
+            height: 100%;
         }
 
         .contact-map {
             width: 100%;
-            height: 400px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 0, 110, 0.2);
-            filter: grayscale(0.2) contrast(1.1);
-        }
-
-        /* Scroll Spiral SVG */
-        .scroll-spiral {
-            position: fixed;
-            left: 50%;
-            top: 0;
-            width: 300px;
-            height: 100vh;
-            transform: translateX(-50%);
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .scroll-spiral svg {
-            width: 100%;
             height: 100%;
-        }
-
-        .spiral-path {
-            stroke: var(--neon-pink);
-            stroke-width: 2;
-            fill: none;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.7));
-            stroke-linecap: round;
+            min-height: 400px;
+            border-radius: 5px;
+            filter: grayscale(0.8) contrast(1.1);
         }
 
         /* Footer */
         footer {
-            background: rgba(10, 10, 10, 0.95);
-            border-top: 1px solid rgba(255, 0, 110, 0.1);
-            padding: 40px 30px 20px;
-            text-align: center;
+            background: var(--secondary-dark);
+            border-top: 1px solid var(--border-elegant);
+            padding: 60px 40px 30px;
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--accent-light);
+        }
+
+        .footer-about p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
         }
 
         .social-links {
             display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 30px;
+            gap: 15px;
         }
 
         .social-link {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--border-elegant);
             border-radius: 50%;
-            background: rgba(255, 0, 110, 0.1);
-            border: 1px solid rgba(255, 0, 110, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: var(--neon-pink);
+            font-size: 20px;
+            color: var(--text-muted);
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform;
-            transform: translateZ(0);
+            transition: all 0.3s ease;
         }
 
         .social-link:hover {
-            background: var(--neon-pink);
-            color: #fff;
-            transform: translateY(-5px) scale(1.15) translateZ(0);
-            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.6);
+            border-color: var(--accent-silver);
+            color: var(--accent-light);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            font-size: 14px;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-elegant);
         }
 
         .copyright {
-            color: var(--text-light);
-            font-size: 14px;
-            margin-top: 20px;
+            color: var(--text-muted);
+            font-size: 13px;
         }
 
         /* Scroll to top button */
         .scroll-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-pink-light) 100%);
+            background: var(--accent-silver);
+            border: 1px solid var(--accent-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: #fff;
+            font-size: 20px;
+            color: var(--primary-dark);
             cursor: pointer;
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(255, 0, 110, 0.3);
-            will-change: transform, opacity;
-            transform: translateZ(0);
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
         }
 
         .scroll-top.visible {
             opacity: 1;
+            visibility: visible;
         }
 
         .scroll-top:hover {
-            transform: translateY(-5px) scale(1.15) translateZ(0);
-            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.7);
+            background: var(--accent-light);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
         }
 
-        /* Animations on scroll */
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(40px) translateZ(0);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: opacity, transform;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .animate-on-scroll.animated {
             opacity: 1;
-            transform: translateY(0) translateZ(0);
+            transform: translateY(0);
         }
 
-        /* Staggered animation delays */
+        /* Staggered delays */
         .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
         .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
         .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
@@ -809,118 +1024,180 @@
         .animate-on-scroll:nth-child(5) { transition-delay: 0.5s; }
         .animate-on-scroll:nth-child(6) { transition-delay: 0.6s; }
 
-        /* Reduce animations for users who prefer reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .process-timeline::before {
+                left: 20px;
+            }
+
+            .process-step {
+                grid-template-columns: 60px 1fr;
+                gap: 30px;
+            }
+
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                grid-column: 1;
+            }
+
+            .step-content {
+                grid-column: 2 !important;
+                text-align: left !important;
+            }
+
+            .step-placeholder {
+                display: none;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 40px;
+            section {
+                padding: 80px 25px;
             }
 
-            .hero p {
+            .nav-container {
+                padding: 0 25px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero-subtitle {
                 font-size: 18px;
             }
 
-            
+            .section-title {
+                font-size: 38px;
+            }
 
-            .section-header h2 {
-                font-size: 36px;
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
 
             .cta-buttons {
                 flex-direction: column;
             }
 
-            .services-grid,
-            .process-steps,
-            .gallery-grid,
-            .pricing-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pricing-card.featured {
-                transform: scale(1) translateZ(0);
-            }
-
-            /* Reduce animations on mobile for better performance */
-            .service-card,
-            .gallery-item,
-            .pricing-card {
-                animation: none !important;
-            }
-
-            .hero-icon {
-                animation-duration: 8s; /* Slower animation on mobile */
+            .btn {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div id="tsparticles"></div>
-
-    <!-- Scroll-controlled spiral -->
-    <div class="scroll-spiral">
-        <svg viewBox="0 0 200 10000" preserveAspectRatio="xMidYMin meet">
-            <path class="spiral-path" d="M100,0
-                Q150,200 100,400
-                Q50,600 100,800
-                Q150,1000 100,1200
-                Q50,1400 100,1600
-                Q150,1800 100,2000
-
-                Q30,2080 40,2140
-                Q60,2190 90,2170
-                Q120,2150 140,2180
-                Q160,2210 170,2260
-                Q175,2320 160,2370
-                Q140,2420 110,2410
-                Q80,2400 60,2430
-                Q40,2460 50,2510
-                Q70,2560 100,2580
-
-                Q150,2700 100,2900
-                Q50,3100 100,3300
-                Q150,3500 100,3700
-                Q50,3900 100,4100
-                Q150,4300 100,4500
-                Q50,4700 100,4900
-                Q150,5100 100,5300
-                Q50,5500 100,5700
-                Q150,5900 100,6100
-                Q50,6300 100,6500
-                Q150,6700 100,6900
-                Q50,7100 100,7300
-                Q150,7500 100,7700
-                Q50,7900 100,8100
-                Q150,8300 100,8500
-                Q50,8700 100,8900
-                Q150,9100 100,9300
-                Q50,9500 100,9700
-                Q150,9900 100,10000"></path>
-        </svg>
-    </div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">CLEAN MASTER</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#precios">Precios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <div class="dots-grid"></div>
         <div class="hero-content">
-            <img src="public/logo.png" alt="Clean Master Shoes" class="hero-icon">
-            <h1>Limpieza Profesional para tu Calzado</h1>
-            <p>Devolvemos la vida a tus zapatos favoritos con técnicas profesionales y productos especializados</p>
+            <img src="public/logo.png" alt="Clean Master Shoes" class="hero-logo">
+            <h1>Excelencia en el Cuidado de tu Calzado</h1>
+            <p class="hero-subtitle">Restauramos la elegancia de tus zapatos con técnicas profesionales y dedicación artesanal</p>
             <div class="cta-buttons">
                 <a href="#contacto" class="btn btn-primary">Solicitar Servicio</a>
-                <a href="#servicios" class="btn btn-secondary">Ver Servicios</a>
+                <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <div class="section-label">Quiénes Somos</div>
+                <h2 class="section-title">Nuestra Historia</h2>
+                <p class="section-description">Dedicados a preservar la calidad y elegancia de tu calzado con más de 10 años de experiencia en el arte de la limpieza profesional</p>
+            </div>
+            <div class="about-content">
+                <div class="animate-on-scroll">
+                    <h3>Tradición y Excelencia</h3>
+                    <p>En Clean Master Shoes, entendemos que cada par de zapatos cuenta una historia. Nuestro compromiso es preservar esa historia a través de servicios de limpieza profesional que combinan técnicas tradicionales con las últimas innovaciones en cuidado de calzado.</p>
+                    <p>Nos especializamos en el tratamiento de todo tipo de materiales, desde cuero fino hasta gamuza delicada, asegurando que cada par reciba el cuidado específico que merece.</p>
+                    <p>Nuestra filosofía se basa en la atención al detalle, el uso de productos premium y un servicio personalizado que garantiza resultados excepcionales en cada trabajo.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature-item animate-on-scroll">
+                        <span class="feature-icon">🏆</span>
+                        <h4>Experiencia</h4>
+                        <p>Más de 10 años perfeccionando el arte del cuidado de calzado</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <span class="feature-icon">✨</span>
+                        <h4>Calidad</h4>
+                        <p>Productos premium y técnicas profesionales certificadas</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <span class="feature-icon">🤝</span>
+                        <h4>Confianza</h4>
+                        <p>Miles de clientes satisfechos respaldan nuestro trabajo</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <span class="feature-icon">⚡</span>
+                        <h4>Eficiencia</h4>
+                        <p>Servicio rápido sin comprometer la calidad del resultado</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -929,59 +1206,60 @@
     <section id="servicios">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Nuestros Servicios</h2>
-                <p>Ofrecemos soluciones especializadas para todo tipo de calzado</p>
+                <div class="section-label">Servicios</div>
+                <h2 class="section-title">Lo Que Ofrecemos</h2>
+                <p class="section-description">Soluciones especializadas para cada tipo de calzado y necesidad</p>
             </div>
             <div class="services-grid">
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">✨</div>
+                    <span class="service-icon">✨</span>
                     <h3>Limpieza Clásica</h3>
-                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
+                    <p>Limpieza completa interior y exterior, tratamiento de suela y aromatizante especializado para mantener tus zapatos impecables.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🔬</div>
-                    <h3>Limpieza de calzado de color</h3>
-                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
+                    <span class="service-icon">🎨</span>
+                    <h3>Calzado de Color</h3>
+                    <p>Tratamiento especializado para calzado de colores, preservando la intensidad y brillo original de tus zapatos favoritos.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🎨</div>
-                    <h3>Limpieza de botas y medias botas</h3>
-                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
+                    <span class="service-icon">👢</span>
+                    <h3>Botas y Medias Botas</h3>
+                    <p>Limpieza profunda adaptada a las necesidades específicas de botas, con atención especial a costuras y materiales.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">🛡️</div>
-                    <h3>Limpieza de calzado blanco y gamuza</h3>
-                    <p>Limpieza interior, exterior, suela y aromatizante.</p>
+                    <span class="service-icon">🤍</span>
+                    <h3>Calzado Blanco y Gamuza</h3>
+                    <p>Técnicas especializadas para materiales delicados, restaurando el blanco brillante y la textura de la gamuza.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">👟</div>
-                    <h3>Limpieza de calzado premium</h3>
-                    <p>Limpieza detallada, aromatizante, repelente de agua y bolsa de sílice (Obligatorio para calzado de alta gama)</p>
+                    <span class="service-icon">👟</span>
+                    <h3>Limpieza Premium</h3>
+                    <p>Servicio de lujo con limpieza detallada, aromatizante, repelente de agua y bolsa de sílice. Ideal para calzado de alta gama.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">💼</div>
-                    <h3>Limpieza de gorras</h3>
-                    <p>Limpieza interior, exterior y aromatizante.</p>
+                    <span class="service-icon">🧢</span>
+                    <h3>Limpieza de Gorras</h3>
+                    <p>Tratamiento especializado para gorras, manteniendo la forma y los colores vibrantes.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">💼</div>
-                    <h3>Boleado</h3>
-                    <p>Limpieza interior, exterior y aromatizante.</p>
+                    <span class="service-icon">✨</span>
+                    <h3>Boleado Profesional</h3>
+                    <p>Servicio de boleado de alta calidad que devuelve el lustre y elegancia a tu calzado formal.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">💼</div>
-                    <h3>Limpieza de bolsas y mochilas</h3>
-                    <p>Limpieza interior, exterior y aromatizante.</p>
+                    <span class="service-icon">🎒</span>
+                    <h3>Bolsas y Mochilas</h3>
+                    <p>Limpieza profunda interior y exterior para tus accesorios, eliminando manchas y olores.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">💼</div>
-                    <h3>Servicio express</h3>
-                    <p>24hrs máximo por par</p>
+                    <span class="service-icon">⚡</span>
+                    <h3>Servicio Express</h3>
+                    <p>Entrega garantizada en máximo 24 horas por par, sin comprometer la calidad del servicio.</p>
                 </div>
                 <div class="service-card animate-on-scroll">
-                    <div class="service-icon">💼</div>
-                    <h3>Blanqueamiento de suela</h3>
-                    <p>Limpieza exterior y aromatizante.</p>
+                    <span class="service-icon">💎</span>
+                    <h3>Blanqueamiento de Suela</h3>
+                    <p>Restauración especializada de suelas blancas, eliminando amarillamiento y manchas difíciles.</p>
                 </div>
             </div>
         </div>
@@ -991,29 +1269,42 @@
     <section id="proceso">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Nuestro Proceso</h2>
-                <p>Seguimos un método profesional de 4 pasos para garantizar los mejores resultados</p>
+                <div class="section-label">Proceso</div>
+                <h2 class="section-title">Nuestro Método</h2>
+                <p class="section-description">Un proceso meticuloso de cuatro pasos que garantiza resultados excepcionales</p>
             </div>
-            <div class="process-steps">
-                <div class="step animate-on-scroll">
+            <div class="process-timeline">
+                <div class="process-step animate-on-scroll">
+                    <div class="step-content">
+                        <h3>Inspección Detallada</h3>
+                        <p>Evaluamos cuidadosamente el estado de tu calzado, identificando materiales, manchas y áreas que requieren atención especial para determinar el tratamiento óptimo.</p>
+                    </div>
                     <div class="step-number">1</div>
-                    <h3>Inspección</h3>
-                    <p>Evaluamos el estado de tu calzado y determinamos el tratamiento ideal</p>
+                    <div class="step-placeholder"></div>
                 </div>
-                <div class="step animate-on-scroll">
+                <div class="process-step animate-on-scroll">
+                    <div class="step-placeholder"></div>
                     <div class="step-number">2</div>
-                    <h3>Limpieza</h3>
-                    <p>Aplicamos técnicas especializadas y productos profesionales</p>
+                    <div class="step-content">
+                        <h3>Limpieza Profesional</h3>
+                        <p>Aplicamos técnicas especializadas y productos premium seleccionados específicamente para cada tipo de material, asegurando una limpieza profunda y segura.</p>
+                    </div>
                 </div>
-                <div class="step animate-on-scroll">
+                <div class="process-step animate-on-scroll">
+                    <div class="step-content">
+                        <h3>Tratamiento y Protección</h3>
+                        <p>Hidratamos, restauramos y protegemos el material con productos de alta calidad, devolviendo la flexibilidad y resistencia original a tu calzado.</p>
+                    </div>
                     <div class="step-number">3</div>
-                    <h3>Tratamiento</h3>
-                    <p>Hidratamos, protegemos y restauramos el material</p>
+                    <div class="step-placeholder"></div>
                 </div>
-                <div class="step animate-on-scroll">
+                <div class="process-step animate-on-scroll">
+                    <div class="step-placeholder"></div>
                     <div class="step-number">4</div>
-                    <h3>Entrega</h3>
-                    <p>Tu calzado listo, como nuevo y con garantía de calidad</p>
+                    <div class="step-content">
+                        <h3>Inspección Final y Entrega</h3>
+                        <p>Realizamos una revisión exhaustiva de calidad y presentamos tu calzado como nuevo, con nuestra garantía de satisfacción total.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1023,8 +1314,9 @@
     <section id="galeria">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Antes y Después</h2>
-                <p>Mira la transformación que logramos con nuestros servicios</p>
+                <div class="section-label">Galería</div>
+                <h2 class="section-title">Antes y Después</h2>
+                <p class="section-description">Resultados que hablan por sí mismos</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item animate-on-scroll">👟</div>
@@ -1037,48 +1329,92 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonios">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <div class="section-label">Testimonios</div>
+                <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
+                <p class="section-description">La satisfacción de nuestros clientes es nuestro mayor logro</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate-on-scroll">
+                    <p class="testimonial-text">Excelente servicio. Llevé mis zapatos de gamuza que pensé que ya no tenían salvación y quedaron como nuevos. El trato es muy profesional y los resultados superaron mis expectativas.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>María González</h4>
+                            <p>Cliente Frecuente</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <p class="testimonial-text">Increíble trabajo con mis tenis blancos. Los había dado por perdidos pero Clean Master los dejó impecables. Definitivamente volveré y los recomendaré con todos.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">C</div>
+                        <div class="author-info">
+                            <h4>Carlos Ramírez</h4>
+                            <p>Cliente Satisfecho</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <p class="testimonial-text">El servicio premium vale cada peso. Mis zapatos de vestir quedaron perfectos, con un acabado profesional que no había visto en ningún otro lugar. Altamente recomendado.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Ana Martínez</h4>
+                            <p>Cliente Premium</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section id="precios">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Planes y Precios</h2>
-                <p>Elige el servicio que mejor se adapte a tus necesidades</p>
+                <div class="section-label">Precios</div>
+                <h2 class="section-title">Planes y Tarifas</h2>
+                <p class="section-description">Servicios de calidad a precios justos y transparentes</p>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card animate-on-scroll">
-                    <h3>Limpieza clásica</h3>
+                    <h3>Limpieza Clásica</h3>
                     <div class="price">$100<span>/par</span></div>
                     <ul class="features">
-                        <li>Limpieza interior</li>
-                        <li>Limpieza exterior</li>
-                        <li>Limpieza de suela</li>
-                        <li>Aromatizante</li>
+                        <li>Limpieza interior completa</li>
+                        <li>Limpieza exterior profunda</li>
+                        <li>Tratamiento de suela</li>
+                        <li>Aromatizante especializado</li>
                     </ul>
                     <a href="#contacto" class="btn btn-secondary">Solicitar</a>
                 </div>
                 <div class="pricing-card featured animate-on-scroll">
                     <div class="pricing-badge">MÁS POPULAR</div>
-                    <h3>Servicio express</h3>
-                    <div class="price">$50<span>/extra por par</span></div>
+                    <h3>Servicio Express</h3>
+                    <div class="price">$50<span>/extra</span></div>
                     <ul class="features">
-                        <li>24hrs máximo por par</li>
-                        <li>Limpieza interior</li>
-                        <li>Limpieza exterior</li>
-                        <li>Limpieza de suela</li>
-                        <li>Aromatizante</li>
+                        <li>Entrega en 24hrs máximo</li>
+                        <li>Limpieza completa interior</li>
+                        <li>Limpieza exterior profesional</li>
+                        <li>Tratamiento de suela</li>
+                        <li>Aromatizante premium</li>
                     </ul>
                     <a href="#contacto" class="btn btn-primary">Solicitar</a>
                 </div>
                 <div class="pricing-card animate-on-scroll">
-                    <h3>Limpieza premium</h3>
+                    <h3>Limpieza Premium</h3>
                     <div class="price">$150<span>/par</span></div>
                     <ul class="features">
-                        <li>Limpieza detallada</li>
-                        <li>Aromatizante</li>
-                        <li>Repelente de agua</li>
-                        <li>Bolsa de sílice</li>
-                        <li>Limpieza exterior</li>
-                        <li>Limpieza de suela</li>
+                        <li>Limpieza detallada artesanal</li>
+                        <li>Aromatizante premium</li>
+                        <li>Repelente de agua profesional</li>
+                        <li>Bolsa de sílice incluida</li>
+                        <li>Tratamiento especializado</li>
+                        <li>Garantía extendida</li>
                     </ul>
                     <a href="#contacto" class="btn btn-secondary">Solicitar</a>
                 </div>
@@ -1090,51 +1426,50 @@
     <section id="contacto">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2>Contáctanos</h2>
-                <p>Estamos listos para devolver la vida a tu calzado</p>
+                <div class="section-label">Contacto</div>
+                <h2 class="section-title">Visítanos</h2>
+                <p class="section-description">Estamos listos para devolver la vida a tu calzado</p>
             </div>
-            <div class="contact-grid">
-                <div class="contact-info-wrapper">
-                    <div class="contact-info animate-on-scroll">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div>
-                                <h4>Ubicación</h4>
-                                <p>Avenida Venustiano Carranza 1061 A, Colinas de Santa Barbara, Sta Bárbara, 28017 Colima, Col.</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div>
-                                <h4>Teléfono</h4>
-                                <p>+52 312-213-9534</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📧</div>
-                            <div>
-                                <h4>Email</h4>
-                                <p>Cleanmastershoes@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">⏰</div>
-                            <div>
-                                <h4>Horario</h4>
-                                <p>Lun - Vie: 10:00 AM - 6:00 PM</p>
-                                <p>Sabado: 10:00 AM - 4:00 PM</p>
-                            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info animate-on-scroll">
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <h4>Ubicación</h4>
+                            <p>Avenida Venustiano Carranza 1061 A<br>Colinas de Santa Barbara<br>Sta Bárbara, 28017<br>Colima, Col.</p>
                         </div>
                     </div>
-                    <div class="map-wrapper animate-on-scroll">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.6076200399712!2d-103.71874969999999!3d19.2636371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255bb4d60eec79%3A0x7e9c9d5cc62414d1!2sClean%20Master%20Shoes!5e0!3m2!1ses-419!2smx!4v1762151426490!5m2!1ses-419!2smx"
-                            class="contact-map"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <h4>Teléfono</h4>
+                            <p><a href="tel:+523122139534">+52 312-213-9534</a></p>
+                        </div>
                     </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href="mailto:Cleanmastershoes@gmail.com">Cleanmastershoes@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">⏰</span>
+                        <div>
+                            <h4>Horario</h4>
+                            <p>Lunes a Viernes: 10:00 AM - 6:00 PM</p>
+                            <p>Sábado: 10:00 AM - 4:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-wrapper animate-on-scroll">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.6076200399712!2d-103.71874969999999!3d19.2636371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255bb4d60eec79%3A0x7e9c9d5cc62414d1!2sClean%20Master%20Shoes!5e0!3m2!1ses-419!2smx!4v1762151426490!5m2!1ses-419!2smx"
+                        class="contact-map"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -1143,12 +1478,36 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="social-links">
-                <a href="#" class="social-link">📘</a>
-                <a href="#" class="social-link">📸</a>
-                <a href="#" class="social-link">💬</a>
-                <a href="#" class="social-link">📧</a>
+            <div class="footer-about">
+                <h3>Clean Master Shoes</h3>
+                <p>Dedicados a preservar la elegancia y calidad de tu calzado con más de 10 años de experiencia. Cada par recibe el cuidado profesional que merece.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                    <a href="#" class="social-link" aria-label="Instagram">📸</a>
+                    <a href="#" class="social-link" aria-label="WhatsApp">💬</a>
+                    <a href="mailto:Cleanmastershoes@gmail.com" class="social-link" aria-label="Email">📧</a>
+                </div>
             </div>
+            <div class="footer-links">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#proceso">Proceso</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Servicios</h4>
+                <ul>
+                    <li><a href="#precios">Precios</a></li>
+                    <li><a href="#galeria">Galería</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
             <p class="copyright">© 2025 Clean Master Shoes. Todos los derechos reservados.</p>
         </div>
     </footer>
@@ -1157,146 +1516,32 @@
     <div class="scroll-top" id="scrollTop">↑</div>
 
     <script>
-        // Create dots grid with anime.js
-        const dotsGrid = document.querySelector('.dots-grid');
-        const gridSize = 20;
-        const totalDots = gridSize * gridSize;
-
-        // Generate 400 dots (20x20)
-        for (let i = 0; i < totalDots; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            dotsGrid.appendChild(dot);
-        }
-
-        // Create pulse animation from center outward with inverse breathing effect
-        anime({
-            targets: '.dot',
-            scale: [
-                { value: 5, duration: 320 },
-                { value: 0.5, duration: 320 },
-                { value: 5, duration: 320 },
-                { value: 0.5, duration: 320 },
-                { value: 5, duration: 320 },
-                { value: 0.5, duration: 320 }
-            ],
-            opacity: [
-                { value: 0.2 },
-                { value: 0.8, duration: 320 },
-                { value: 0.2, duration: 320 }
-            ],
-            easing: 'easeInOutQuad',
-            loop: true,
-            delay: anime.stagger(800, {
-                grid: [20, 20],
-                from: 'center'
-            }),
-            endDelay: 0
-        });
-
-        // Initialize tsParticles (optimized for better performance)
-        tsParticles.load("tsparticles", {
-            background: {
-                color: {
-                    value: "transparent",
-                },
-            },
-            fpsLimit: 60, // Reduced from 120 for better performance
-            interactivity: {
-                events: {
-                    onClick: {
-                        enable: true,
-                        mode: "push",
-                    },
-                    onHover: {
-                        enable: true,
-                        mode: "repulse",
-                    },
-                    resize: true,
-                },
-                modes: {
-                    push: {
-                        quantity: 2, // Reduced from 4
-                    },
-                    repulse: {
-                        distance: 120, // Reduced from 150
-                        duration: 0.3, // Faster response
-                    },
-                },
-            },
-            particles: {
-                color: {
-                    value: "#FF006E",
-                },
-                links: {
-                    color: "#FF006E",
-                    distance: 120,
-                    enable: true,
-                    opacity: 0.25,
-                    width: 1,
-                },
-                move: {
-                    direction: "none",
-                    enable: true,
-                    outModes: {
-                        default: "bounce",
-                    },
-                    random: true,
-                    speed: 1.5,
-                    straight: false,
-                },
-                number: {
-                    density: {
-                        enable: true,
-                        area: 800,
-                    },
-                    value: 100,
-                },
-                opacity: {
-                    value: 0.6,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 1,
-                        opacity_min: 0.3,
-                        sync: false
-                    }
-                },
-                shape: {
-                    type: "circle",
-                },
-                size: {
-                    value: { min: 1, max: 4 },
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 2,
-                        size_min: 1,
-                        sync: false
-                    }
-                },
-            },
-            detectRetina: true,
-        });
-
-        // Scroll to top button (optimized with throttle)
-        const scrollTop = document.getElementById('scrollTop');
-        let scrollTimeout;
-        let ticking = false;
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
 
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    if (window.scrollY > 500) {
-                        scrollTop.classList.add('visible');
-                    } else {
-                        scrollTop.classList.remove('visible');
-                    }
-                    ticking = false;
-                });
-                ticking = true;
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
-        }, { passive: true });
+
+            lastScroll = currentScroll;
+        });
+
+        // Scroll to top button
+        const scrollTop = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
 
         scrollTop.addEventListener('click', () => {
             window.scrollTo({
@@ -1305,18 +1550,16 @@
             });
         });
 
-        // Animate on scroll using Intersection Observer (better performance)
+        // Intersection Observer for scroll animations
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animated');
-                    // Optional: stop observing after animation
-                    // observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -1326,35 +1569,30 @@
             observer.observe(element);
         });
 
-        // Spiral SVG controlled by scroll progress
-        const initScrollSpiral = () => {
-            const spiralPath = document.querySelector('.spiral-path');
-            if (!spiralPath) return;
+        // Hero elements animation on load
+        window.addEventListener('load', () => {
+            document.querySelector('.hero-logo').classList.add('animate');
+            document.querySelector('.hero h1').classList.add('animate');
+            document.querySelector('.hero-subtitle').classList.add('animate');
+            document.querySelector('.cta-buttons').classList.add('animate');
+            document.querySelector('.scroll-indicator').classList.add('animate');
+        });
 
-            const length = spiralPath.getTotalLength();
-            spiralPath.style.strokeDasharray = length;
-            spiralPath.style.strokeDashoffset = length;
-
-            let ticking = false;
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        const scrollTop = window.scrollY;
-                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                        const scrollPercent = scrollTop / docHeight;
-                        const drawLength = length * scrollPercent;
-
-                        spiralPath.style.strokeDashoffset = length - drawLength;
-                        ticking = false;
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
-                    ticking = true;
                 }
-            }, { passive: true });
-        };
-
-        // Initialize spiral
-        initScrollSpiral();
+            });
+        });
     </script>
 </body>
 </html>

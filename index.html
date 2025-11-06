@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clean Master Shoes - Próximamente</title>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <title>Clean Master Shoes - Limpieza Profesional de Calzado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,10 +14,19 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #1a1a1a;
+            --accent-silver: #C0C0C0;
+            --accent-light: #E8E8E8;
+            --text-muted: #888;
+            --border-elegant: rgba(192, 192, 192, 0.2);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--primary-dark);
+            color: var(--accent-light);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,151 +35,215 @@
             position: relative;
         }
 
-        /* Animated background gradient */
-        .bg-gradient {
+        /* Elegant background texture */
+        body::before {
+            content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
-            animation: gradientShift 8s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* tsParticles container */
-        #tsparticles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(192, 192, 192, 0.02) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .container {
             text-align: center;
             z-index: 10;
-            max-width: 90%;
-            padding: 20px;
+            max-width: 800px;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Decorative top border */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-silver), transparent);
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
         }
 
         .logo {
-            width: 150px;
+            width: 180px;
             height: auto;
             display: block;
-            margin: 0 auto 30px;
-            animation: pulse 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(255, 0, 110, 0.5));
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            margin: 0 auto 40px;
+            filter: drop-shadow(0 0 20px rgba(192, 192, 192, 0.3));
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.2s forwards;
         }
 
         .brand-name {
-            font-size: 48px;
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
             font-weight: 700;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #FF006E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            animation: fadeInUp 1s ease-out;
+            color: var(--accent-light);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            position: relative;
+            display: inline-block;
+        }
+
+        .brand-name::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--accent-silver);
+            box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
         }
 
         .tagline {
-            font-size: 20px;
-            color: #999;
-            margin-bottom: 40px;
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            margin-top: 30px;
             font-weight: 300;
-            animation: fadeInUp 1.2s ease-out;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.6s forwards;
         }
 
-        .coming-soon {
+        .cta-link {
             position: relative;
             display: inline-block;
-            padding: 20px 50px;
+            padding: 18px 60px;
             margin: 30px 0;
-            border: 2px solid #FF006E;
-            border-radius: 50px;
-            animation: fadeInUp 1.4s ease-out;
-            overflow: hidden;
+            border: 1px solid var(--accent-silver);
+            background: transparent;
+            color: var(--accent-light);
             text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.8s forwards;
         }
 
-        .coming-soon:hover {
-            background: rgba(255, 0, 110, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
-        }
-
-        .coming-soon::before {
+        .cta-link::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.3), transparent);
-            animation: shine 3s infinite;
+            background: var(--accent-silver);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
         }
 
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .cta-link:hover {
+            color: var(--primary-dark);
+            border-color: var(--accent-light);
+            box-shadow: 0 5px 30px rgba(192, 192, 192, 0.3);
+            transform: translateY(-2px);
         }
 
-        .coming-soon-text {
-            font-size: 28px;
-            font-weight: 600;
-            color: #FF006E;
-            position: relative;
-            z-index: 1;
+        .cta-link:hover::before {
+            left: 0;
         }
 
-        .message {
-            font-size: 18px;
-            color: #888;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-            animation: fadeInUp 1.6s ease-out;
-        }
-
-        .highlight {
-            color: #FF006E;
-            font-weight: 600;
-        }
-
-        .dots {
-            display: inline-block;
-            width: 20px;
-        }
-
-        .dots span {
-            animation: blink 1.4s infinite;
+        .divider {
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-elegant), transparent);
+            margin: 50px auto 30px;
             opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
         }
 
-        .dots span:nth-child(2) {
-            animation-delay: 0.2s;
+        .contact-info {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
         }
 
-        .dots span:nth-child(3) {
-            animation-delay: 0.4s;
+        .contact-info p {
+            margin: 8px 0;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        .contact-info a {
+            color: var(--accent-silver);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Elegant corner decorations */
+        .corner-decoration {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .corner-decoration::before,
+        .corner-decoration::after {
+            content: '';
+            position: absolute;
+            background: var(--border-elegant);
+        }
+
+        .corner-decoration.top-left {
+            top: 30px;
+            left: 30px;
+        }
+
+        .corner-decoration.top-left::before {
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 1px;
+        }
+
+        .corner-decoration.top-left::after {
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 60px;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .corner-decoration.bottom-right::before {
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 1px;
+        }
+
+        .corner-decoration.bottom-right::after {
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            height: 60px;
         }
 
         @keyframes fadeInUp {
@@ -182,174 +257,77 @@
             }
         }
 
-        /* Contact info */
-        .contact {
-            margin-top: 60px;
-            animation: fadeInUp 1.8s ease-out;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        .contact-text {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: rgba(255, 0, 110, 0.1);
-            border: 1px solid rgba(255, 0, 110, 0.3);
-            border-radius: 25px;
-            color: #FF006E;
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: rgba(255, 0, 110, 0.2);
-            border-color: #FF006E;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 0, 110, 0.3);
-        }
-
+        /* Mobile responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
             .logo {
-                width: 180px;
+                width: 140px;
             }
 
             .brand-name {
-                font-size: 32px;
+                font-size: 36px;
+                letter-spacing: 2px;
             }
 
             .tagline {
                 font-size: 16px;
             }
 
-            .coming-soon-text {
-                font-size: 22px;
+            .cta-link {
+                padding: 16px 40px;
+                font-size: 12px;
             }
 
-            .message {
-                font-size: 16px;
+            .corner-decoration {
+                width: 80px;
+                height: 80px;
+            }
+
+            .corner-decoration.top-left::before,
+            .corner-decoration.bottom-right::before {
+                width: 40px;
+            }
+
+            .corner-decoration.top-left::after,
+            .corner-decoration.bottom-right::after {
+                height: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-
-    <!-- tsParticles container -->
-    <div id="tsparticles"></div>
+    <!-- Elegant corner decorations -->
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration bottom-right"></div>
 
     <div class="container">
-        <img src="public/logo.png" alt="Clean Master Shoes" class="logo">
-        
-        <h1 class="brand-name">CLEAN MASTER SHOES</h1>
-        
-        <p class="tagline">Expertos en limpieza profesional de tu calzado</p>
-        
-        <a href="site.html" class="coming-soon">
-            <div class="coming-soon-text">CONOCENOS</div>
-        </a>
-        
-        
-    </div>
+        <img src="public/logo2.png" alt="Clean Master Shoes" class="logo">
 
-    <script>
-        // Initialize tsParticles
-        tsParticles.load("tsparticles", {
-            background: {
-                color: {
-                    value: "transparent",
-                },
-            },
-            fpsLimit: 120,
-            interactivity: {
-                events: {
-                    onClick: {
-                        enable: true,
-                        mode: "push",
-                    },
-                    onHover: {
-                        enable: true,
-                        mode: "repulse",
-                    },
-                    resize: true,
-                },
-                modes: {
-                    push: {
-                        quantity: 4,
-                    },
-                    repulse: {
-                        distance: 200,
-                        duration: 0.4,
-                    },
-                },
-            },
-            particles: {
-                color: {
-                    value: "#FF006E",
-                },
-                links: {
-                    color: "#FF006E",
-                    distance: 150,
-                    enable: true,
-                    opacity: 0.3,
-                    width: 1,
-                },
-                move: {
-                    direction: "none",
-                    enable: true,
-                    outModes: {
-                        default: "bounce",
-                    },
-                    random: true,
-                    speed: 2,
-                    straight: false,
-                },
-                number: {
-                    density: {
-                        enable: true,
-                        area: 800,
-                    },
-                    value: 80,
-                },
-                opacity: {
-                    value: 0.7,
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 1,
-                        opacity_min: 0.3,
-                        sync: false
-                    }
-                },
-                shape: {
-                    type: "circle",
-                },
-                size: {
-                    value: { min: 2, max: 6 },
-                    random: true,
-                    anim: {
-                        enable: true,
-                        speed: 3,
-                        size_min: 1,
-                        sync: false
-                    }
-                },
-            },
-            detectRetina: true,
-        });
-    </script>
+        <h1 class="brand-name">Clean Master Shoes</h1>
+
+        <p class="tagline">Elegancia y cuidado profesional para tu calzado</p>
+
+        <a href="site.html" class="cta-link">Descubrir más</a>
+
+        <div class="divider"></div>
+
+        <div class="contact-info">
+            <p>Colima, México</p>
+            <p><a href="tel:+523122139534">+52 312-213-9534</a></p>
+            <p><a href="mailto:Cleanmastershoes@gmail.com">Cleanmastershoes@gmail.com</a></p>
+        </div>
+    </div>
 </body>
 </html>
