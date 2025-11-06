@@ -940,6 +940,120 @@
             box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
         }
 
+        /* QR Code Styles */
+        .qr-code {
+            display: block;
+            max-width: 120px;
+            height: auto;
+        }
+
+        .qr-code:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-silver) !important;
+            box-shadow: 0 5px 20px rgba(192, 192, 192, 0.3);
+        }
+
+        /* QR Modal Styles */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .qr-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-modal-content {
+            background: var(--secondary-dark);
+            border: 2px solid var(--accent-silver);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            max-width: 90%;
+            animation: zoomIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(192, 192, 192, 0.3);
+        }
+
+        .qr-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 35px;
+            font-weight: 300;
+            color: var(--accent-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .qr-modal-close:hover {
+            color: var(--accent-silver);
+            transform: rotate(90deg);
+        }
+
+        .qr-code-large {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--border-elegant);
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+        }
+
+        .qr-modal-text {
+            margin-top: 25px;
+            color: var(--text-muted);
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive QR Modal */
+        @media (max-width: 768px) {
+            .qr-modal-content {
+                padding: 30px 20px;
+            }
+
+            .qr-code-large {
+                max-width: 280px;
+            }
+
+            .qr-modal-text {
+                font-size: 14px;
+            }
+        }
+
         /* Animations */
 
         .animate-on-scroll {
@@ -1435,6 +1549,18 @@
             <div class="contact-wrapper">
                 <div class="contact-info animate-on-scroll">
                     <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <div>
+                            <h4>QR</h4>
+                            <p style="margin-bottom: 10px;">Escanea para visitar nuestro sitio</p>
+                            <img src="https://quickchart.io/qr?text=https://www.cleanmastershoes.com&size=120&margin=1"
+                                 alt="Código QR Clean Master Shoes"
+                                 class="qr-code"
+                                 id="qrCode"
+                                 style="cursor: pointer; border: 2px solid var(--border-elegant); border-radius: 5px; transition: all 0.3s ease;">
+                        </div>
+                    </div>
+                    <div class="contact-item">
                         <span class="contact-icon">📍</span>
                         <div>
                             <h4>Ubicación</h4>
@@ -1516,6 +1642,17 @@
 
     <!-- Scroll to top button -->
     <div class="scroll-top" id="scrollTop">↑</div>
+
+    <!-- QR Code Modal -->
+    <div class="qr-modal" id="qrModal">
+        <div class="qr-modal-content">
+            <span class="qr-modal-close" id="qrModalClose">&times;</span>
+            <img src="https://quickchart.io/qr?text=https://www.cleanmastershoes.com&size=400&margin=2"
+                 alt="Código QR Clean Master Shoes - Grande"
+                 class="qr-code-large">
+            <p class="qr-modal-text">Escanea para visitar www.cleanmastershoes.com</p>
+        </div>
+    </div>
 
     <script>
         // Navbar scroll effect
@@ -1924,6 +2061,41 @@
                 });
             });
         });
+
+        // QR Code Modal functionality
+        const qrCode = document.getElementById('qrCode');
+        const qrModal = document.getElementById('qrModal');
+        const qrModalClose = document.getElementById('qrModalClose');
+
+        if (qrCode && qrModal && qrModalClose) {
+            // Open modal when clicking QR code
+            qrCode.addEventListener('click', () => {
+                qrModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+
+            // Close modal when clicking X button
+            qrModalClose.addEventListener('click', () => {
+                qrModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+
+            // Close modal when clicking outside the content
+            qrModal.addEventListener('click', (e) => {
+                if (e.target === qrModal) {
+                    qrModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+
+            // Close modal with ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && qrModal.classList.contains('active')) {
+                    qrModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+        }
 
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
