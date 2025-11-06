@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- GSAP Core -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -21,6 +23,7 @@
             --accent-light: #E8E8E8;
             --text-muted: #888;
             --border-elegant: rgba(192, 192, 192, 0.2);
+            --logo-pink: #E8B4D0;
         }
 
         body {
@@ -35,16 +38,53 @@
             position: relative;
         }
 
-        /* Elegant background texture */
-        body::before {
-            content: '';
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .video-background video {
             position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0;
+            filter: brightness(0.85);
+        }
+
+        /* Video Overlay */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.70);
+            z-index: 1;
+            opacity: 1;
+        }
+
+        /* Elegant background texture (over overlay) */
+        .background-texture {
+            position: fixed;
             width: 100%;
             height: 100%;
             background:
                 radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 80% 30%, rgba(192, 192, 192, 0.02) 0%, transparent 50%);
             pointer-events: none;
+            z-index: 2;
         }
 
         .container {
@@ -64,8 +104,6 @@
             transform: translateX(-50%);
             width: 80px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-silver), transparent);
-            box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
         }
 
         .logo {
@@ -75,8 +113,6 @@
             margin: 0 auto 40px;
             filter: drop-shadow(0 0 20px rgba(192, 192, 192, 0.3));
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 0.2s forwards;
         }
 
         .brand-name {
@@ -88,8 +124,6 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 0.4s forwards;
             position: relative;
             display: inline-block;
         }
@@ -114,8 +148,6 @@
             font-weight: 300;
             letter-spacing: 1px;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 0.6s forwards;
         }
 
         .cta-link {
@@ -123,9 +155,9 @@
             display: inline-block;
             padding: 18px 60px;
             margin: 30px 0;
-            border: 1px solid var(--accent-silver);
+            border: 1px solid var(--logo-pink);
             background: transparent;
-            color: var(--accent-light);
+            color: var(--logo-pink);
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
@@ -134,8 +166,6 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 0.8s forwards;
         }
 
         .cta-link::before {
@@ -145,15 +175,15 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--accent-silver);
+            background: var(--logo-pink);
             transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: -1;
         }
 
         .cta-link:hover {
             color: var(--primary-dark);
-            border-color: var(--accent-light);
-            box-shadow: 0 5px 30px rgba(192, 192, 192, 0.3);
+            border-color: var(--logo-pink);
+            box-shadow: 0 5px 30px rgba(232, 180, 208, 0.5);
             transform: translateY(-2px);
         }
 
@@ -167,7 +197,6 @@
             background: linear-gradient(90deg, transparent, var(--border-elegant), transparent);
             margin: 50px auto 30px;
             opacity: 0;
-            animation: fadeIn 1s ease-out 1s forwards;
         }
 
         .contact-info {
@@ -175,7 +204,6 @@
             color: var(--text-muted);
             margin-top: 40px;
             opacity: 0;
-            animation: fadeIn 1s ease-out 1.2s forwards;
         }
 
         .contact-info p {
@@ -199,6 +227,7 @@
             height: 120px;
             pointer-events: none;
             opacity: 0.3;
+            z-index: 5;
         }
 
         .corner-decoration::before,
@@ -246,26 +275,6 @@
             height: 60px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
         /* Mobile responsive */
         @media (max-width: 768px) {
             .container {
@@ -304,30 +313,144 @@
             .corner-decoration.bottom-right::after {
                 height: 40px;
             }
+
+            /* Keep video visible on mobile */
+            .video-overlay {
+                background: rgba(10, 10, 10, 0.75);
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="public/videos/mainvideo.mp4" type="video/mp4">
+            <!-- Fallback for browsers that don't support video -->
+        </video>
+    </div>
+
+    <!-- Video Overlay -->
+    <div class="video-overlay" id="videoOverlay"></div>
+
+    <!-- Background Texture -->
+    <div class="background-texture"></div>
+
     <!-- Elegant corner decorations -->
     <div class="corner-decoration top-left"></div>
     <div class="corner-decoration bottom-right"></div>
 
     <div class="container">
-        <img src="public/logo2.png" alt="Clean Master Shoes" class="logo">
+        <img src="public/logo.png" alt="Clean Master Shoes" class="logo" id="logo">
 
-        <h1 class="brand-name">Clean Master Shoes</h1>
+        <p class="tagline" id="tagline">Elegancia y cuidado profesional para tu calzado</p>
 
-        <p class="tagline">Elegancia y cuidado profesional para tu calzado</p>
+        <a href="site.html" class="cta-link" id="ctaLink">Descubrir más</a>
 
-        <a href="site.html" class="cta-link">Descubrir más</a>
+        <div class="divider" id="divider"></div>
 
-        <div class="divider"></div>
-
-        <div class="contact-info">
+        <div class="contact-info" id="contactInfo">
             <p>Colima, México</p>
-            <p><a href="tel:+523122139534">+52 312-213-9534</a></p>
-            <p><a href="mailto:Cleanmastershoes@gmail.com">Cleanmastershoes@gmail.com</a></p>
         </div>
     </div>
+
+    <script>
+        // Wait for DOM and video to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('bgVideo');
+            const overlay = document.getElementById('videoOverlay');
+            const logo = document.getElementById('logo');
+            const brandName = document.getElementById('brandName');
+            const tagline = document.getElementById('tagline');
+            const ctaLink = document.getElementById('ctaLink');
+            const divider = document.getElementById('divider');
+            const contactInfo = document.getElementById('contactInfo');
+
+            // Set initial states
+            gsap.set(video, { scale: 1.1, opacity: 0 });
+            // Overlay starts visible to prevent white flash
+            gsap.set(overlay, { opacity: 1 });
+            gsap.set([logo, brandName, tagline, ctaLink, divider, contactInfo], {
+                opacity: 0,
+                y: 30
+            });
+
+            // Create master timeline
+            const masterTimeline = gsap.timeline({
+                defaults: {
+                    ease: "power3.out"
+                }
+            });
+
+            // Video entrance animation (fade in + zoom out)
+            // Overlay is already visible, only animate the video
+            masterTimeline.to(video, {
+                opacity: 0.75,
+                scale: 1,
+                duration: 2.5,
+                ease: "power2.out"
+            }, 0);
+
+            // Content animations (staggered timeline)
+            masterTimeline.to(logo, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, 1.2);
+
+            masterTimeline.to(brandName, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, 1.5);
+
+            masterTimeline.to(tagline, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, 1.8);
+
+            masterTimeline.to(ctaLink, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, 2.1);
+
+            masterTimeline.to(divider, {
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 2.3);
+
+            masterTimeline.to(contactInfo, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 2.5);
+
+            // Optional: Pause video if page is hidden (performance optimization)
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    video.pause();
+                } else {
+                    video.play();
+                }
+            });
+
+            // Error handling for video
+            video.addEventListener('error', function() {
+                console.warn('Video failed to load, using fallback background');
+                // Fallback: just show the overlay with dark background
+                gsap.to(overlay, { opacity: 1, duration: 1 });
+                // Continue with content animations
+                masterTimeline.play();
+            });
+        });
+    </script>
 </body>
 </html>
