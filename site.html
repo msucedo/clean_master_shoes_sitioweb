@@ -103,10 +103,25 @@
             text-decoration: none;
             letter-spacing: 2px;
             transition: color 0.3s ease;
+            display: none;
         }
 
         .nav-logo:hover {
             color: var(--accent-silver);
+        }
+
+        .nav-logo-img {
+            height: 40px;
+            width: auto;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(192, 192, 192, 0.2));
+        }
+
+        .nav-logo-img.visible {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .nav-links {
@@ -152,6 +167,7 @@
             color: var(--accent-light);
             font-size: 24px;
             cursor: pointer;
+            order: 1;
         }
 
         /* Hero Section */
@@ -524,6 +540,8 @@
             text-align: center;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .pricing-card.featured {
@@ -595,6 +613,10 @@
             color: var(--accent-silver);
             font-weight: 700;
             margin-right: 12px;
+        }
+
+        .pricing-card .btn {
+            margin-top: auto;
         }
 
         /* Gallery Grid */
@@ -941,6 +963,15 @@
 
         /* Mobile Responsive */
         @media (max-width: 1024px) {
+            .nav-container {
+                justify-content: space-between;
+            }
+
+            .nav-logo-img {
+                order: 3;
+                margin-left: auto;
+            }
+
             .nav-links {
                 position: fixed;
                 top: 70px;
@@ -956,6 +987,7 @@
                 border-right: 1px solid var(--border-elegant);
                 box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
                 z-index: 999;
+                order: 2;
             }
 
             .nav-links.active {
@@ -1092,6 +1124,8 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
+            <button class="mobile-menu-btn">☰</button>
+            <img src="public/logo2.png" alt="Clean Master Shoes" class="nav-logo-img">
             <a href="index.html" class="nav-logo">CLEAN MASTER SHOES</a>
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
@@ -1101,7 +1135,6 @@
                 <li><a href="#precios">Precios</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
-            <button class="mobile-menu-btn">☰</button>
         </div>
     </nav>
 
@@ -1742,6 +1775,78 @@
                 });
             });
         }
+
+        // Logo animado en navbar cuando se hace scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroLogo = document.querySelector('.hero-logo');
+            const navLogo = document.querySelector('.nav-logo-img');
+
+            if (!heroLogo || !navLogo) return;
+
+            // Variable para saber si ya se animó
+            let hasAnimated = false;
+
+            // Observer para detectar cuando el logo del hero sale del viewport
+            const logoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // El logo del hero está visible, ocultar logo de navbar
+                        hasAnimated = false;
+                        gsap.to(navLogo, {
+                            opacity: 0,
+                            scale: 0,
+                            duration: 0.4,
+                            ease: "power2.inOut"
+                        });
+                    } else {
+                        // El logo del hero no está visible, mostrar logo de navbar
+                        // Solo calcular la posición la primera vez para evitar saltos
+                        if (!hasAnimated) {
+                            hasAnimated = true;
+
+                            // Calcular posición inicial (simular que viene desde el centro)
+                            const heroRect = heroLogo.getBoundingClientRect();
+                            const navRect = navLogo.getBoundingClientRect();
+
+                            // Distancias desde donde está el hero hasta donde está la navbar
+                            const deltaX = heroRect.left + (heroRect.width / 2) - (navRect.left + (navRect.width / 2));
+                            const deltaY = heroRect.top + (heroRect.height / 2) - (navRect.top + (navRect.height / 2));
+
+                            // Animar desde la posición del hero hacia la navbar
+                            gsap.fromTo(navLogo,
+                                {
+                                    x: deltaX,
+                                    y: deltaY,
+                                    scale: 4,
+                                    opacity: 0
+                                },
+                                {
+                                    x: 0,
+                                    y: 0,
+                                    scale: 1,
+                                    opacity: 1,
+                                    duration: 0.8,
+                                    ease: "power3.out"
+                                }
+                            );
+                        } else {
+                            // Si ya se animó una vez, solo hacer fade in
+                            gsap.to(navLogo, {
+                                opacity: 1,
+                                scale: 1,
+                                duration: 0.4,
+                                ease: "power2.inOut"
+                            });
+                        }
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '-100px 0px 0px 0px'
+            });
+
+            logoObserver.observe(heroLogo);
+        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
