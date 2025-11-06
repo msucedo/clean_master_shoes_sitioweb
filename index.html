@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Clean Master Shoes - Limpieza Profesional de Calzado</title>
 
     <!-- PWA Meta Tags -->
@@ -36,6 +36,10 @@
             --text-muted: #888;
             --border-elegant: rgba(192, 192, 192, 0.2);
             --logo-pink: #E8B4D0;
+        }
+
+        html {
+            overflow-x: hidden;
         }
 
         body {
@@ -192,14 +196,16 @@
             z-index: -1;
         }
 
-        .cta-link:hover {
+        .cta-link:hover,
+        .cta-link.active {
             color: var(--primary-dark);
             border-color: var(--logo-pink);
             box-shadow: 0 5px 30px rgba(232, 180, 208, 0.5);
             transform: translateY(-2px);
         }
 
-        .cta-link:hover::before {
+        .cta-link:hover::before,
+        .cta-link.active::before {
             left: 0;
         }
 
@@ -462,6 +468,24 @@
                     });
             });
         }
+
+        // Button fill animation on click
+        const ctaLink = document.getElementById('ctaLink');
+        if (ctaLink) {
+            ctaLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = ctaLink.getAttribute('href');
+
+                // Trigger CSS fill effect
+                ctaLink.classList.add('active');
+
+                // Navigate after animation completes
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500);
+            });
+        }
+
     </script>
 </body>
 </html>

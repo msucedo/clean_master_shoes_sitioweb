@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Clean Master Shoes - Limpieza Profesional de Calzado</title>
 
     <!-- PWA Meta Tags -->
@@ -43,6 +43,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -175,12 +176,6 @@
             height: auto;
             margin-bottom: 50px;
             filter: drop-shadow(0 0 30px rgba(192, 192, 192, 0.3));
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero-logo.animate {
-            animation: fadeInUp 1s ease-out forwards;
         }
 
         .hero h1 {
@@ -191,12 +186,6 @@
             color: var(--accent-light);
             letter-spacing: 3px;
             line-height: 1.2;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero h1.animate {
-            animation: fadeInUp 1s ease-out 0.2s forwards;
         }
 
         .hero-subtitle {
@@ -205,12 +194,6 @@
             margin-bottom: 60px;
             font-weight: 300;
             letter-spacing: 1px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero-subtitle.animate {
-            animation: fadeInUp 1s ease-out 0.4s forwards;
         }
 
         .cta-buttons {
@@ -218,12 +201,6 @@
             gap: 25px;
             justify-content: center;
             flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .cta-buttons.animate {
-            animation: fadeInUp 1s ease-out 0.6s forwards;
         }
 
         .btn {
@@ -244,25 +221,10 @@
             border: 1px solid var(--accent-silver);
         }
 
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--accent-light);
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: -1;
-        }
-
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 40px rgba(192, 192, 192, 0.4);
-        }
-
-        .btn-primary:hover::before {
-            left: 0;
+            background: var(--accent-light);
         }
 
         .btn-secondary {
@@ -271,68 +233,13 @@
             border: 1px solid var(--accent-silver);
         }
 
-        .btn-secondary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--accent-silver);
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: -1;
-        }
-
         .btn-secondary:hover {
+            background: var(--accent-silver);
             color: var(--primary-dark);
             transform: translateY(-3px);
             box-shadow: 0 10px 40px rgba(192, 192, 192, 0.3);
         }
 
-        .btn-secondary:hover::before {
-            left: 0;
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 50px;
-            border: 2px solid var(--border-elegant);
-            border-radius: 20px;
-            opacity: 0;
-        }
-
-        .scroll-indicator.animate {
-            animation: fadeIn 1s ease-out 1s forwards;
-        }
-
-        .scroll-indicator::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 10px;
-            background: var(--accent-silver);
-            border-radius: 2px;
-            animation: scroll-down 2s ease-in-out infinite;
-        }
-
-        @keyframes scroll-down {
-            0%, 100% {
-                top: 10px;
-                opacity: 1;
-            }
-            50% {
-                top: 25px;
-                opacity: 0.3;
-            }
-        }
 
         /* Sections */
         section {
@@ -1001,25 +908,6 @@
         }
 
         /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
 
         .animate-on-scroll {
             opacity: 0;
@@ -1045,7 +933,7 @@
             .nav-links {
                 position: fixed;
                 top: 70px;
-                right: -100%;
+                left: -100%;
                 flex-direction: column;
                 background: rgba(10, 10, 10, 0.98);
                 backdrop-filter: blur(10px);
@@ -1053,14 +941,14 @@
                 height: calc(100vh - 70px);
                 padding: 40px 0;
                 gap: 0;
-                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 1px solid var(--border-elegant);
-                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-right: 1px solid var(--border-elegant);
+                box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
                 z-index: 999;
             }
 
             .nav-links.active {
-                right: 0;
+                left: 0;
             }
 
             .nav-links li {
@@ -1139,7 +1027,7 @@
 
             .nav-container {
                 padding: 0 25px;
-                justify-content: flex-end;
+                justify-content: flex-start;
             }
 
             .hero h1 {
@@ -1217,7 +1105,6 @@
                 <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
             </div>
         </div>
-        <div class="scroll-indicator"></div>
     </section>
 
     <!-- About Section -->
@@ -1746,14 +1633,58 @@
             featureObserver.observe(item);
         });
 
-        // Hero elements animation on load
-        window.addEventListener('load', () => {
-            document.querySelector('.hero-logo').classList.add('animate');
-            document.querySelector('.hero h1').classList.add('animate');
-            document.querySelector('.hero-subtitle').classList.add('animate');
-            document.querySelector('.cta-buttons').classList.add('animate');
-            document.querySelector('.scroll-indicator').classList.add('animate');
+        // Hero animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const logo = document.querySelector('.hero-logo');
+            const title = document.querySelector('.hero h1');
+            const subtitle = document.querySelector('.hero-subtitle');
+            const buttons = document.querySelectorAll('.cta-buttons .btn');
+
+            animateHero(logo, title, subtitle, buttons, 0.5);
         });
+
+        // Función helper para animar el hero
+        function animateHero(logo, title, subtitle, buttons, baseDelay) {
+            // Logo: zoom + fade desde arriba
+            gsap.from(logo, {
+                scale: 0.5,
+                y: -100,
+                opacity: 0,
+                duration: 2,
+                delay: baseDelay,
+                ease: "power3.out"
+            });
+
+            // Título: desliza desde la izquierda
+            gsap.from(title, {
+                x: -150,
+                opacity: 0,
+                duration: 1.8,
+                delay: baseDelay + 0.5,
+                ease: "power3.out"
+            });
+
+            // Subtitle: desliza desde la derecha
+            gsap.from(subtitle, {
+                x: 150,
+                opacity: 0,
+                duration: 1.5,
+                delay: baseDelay + 1,
+                ease: "power3.out"
+            });
+
+            // Botones: aparición individual con bounce
+            buttons.forEach((btn, index) => {
+                gsap.from(btn, {
+                    y: 100,
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 1.5,
+                    delay: baseDelay + 1.5 + (index * 0.3),
+                    ease: "back.out(1.4)"
+                });
+            });
+        }
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1805,6 +1736,32 @@
                 }
             });
         }
+
+        // Button fill animation on click (mobile-friendly) with GSAP
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const isPrimary = this.classList.contains('btn-primary');
+                const isSecondary = this.classList.contains('btn-secondary');
+
+                // Determine target colors based on button type
+                let targetBg, targetColor;
+                if (isPrimary) {
+                    targetBg = 'var(--accent-light)';
+                    targetColor = 'var(--primary-dark)';
+                } else if (isSecondary) {
+                    targetBg = 'var(--accent-silver)';
+                    targetColor = 'var(--primary-dark)';
+                }
+
+                // Animate with GSAP
+                gsap.to(this, {
+                    backgroundColor: targetBg,
+                    color: targetColor,
+                    duration: 0.4,
+                    ease: "power2.inOut"
+                });
+            });
+        });
 
         // Register Service Worker for PWA functionality
         if ('serviceWorker' in navigator) {
