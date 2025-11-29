@@ -1519,7 +1519,7 @@
                 <div class="pricing-card featured animate-on-scroll">
                     <div class="pricing-badge">MÁS POPULAR</div>
                     <h3>Servicio Express</h3>
-                    <div class="price">$50<span>/extra</span></div>
+                    <div class="price">$50<span>/extra por par</span></div>
                     <ul class="features">
                         <li>Entrega en 24hrs máximo</li>
                         <li>Limpieza completa interior</li>
@@ -2047,6 +2047,10 @@
                     const finalPrice = parseInt(priceMatch[1]);
                     const priceObj = { value: 0 };
 
+                    // Guardar el texto original del span para preservarlo durante la animación
+                    const spanElement = priceElement.querySelector('span');
+                    const originalSpanText = spanElement ? spanElement.textContent : '/par';
+
                     // Set initial state
                     gsap.set(card, { opacity: 0, y: 50, scale: 0.95 });
 
@@ -2073,7 +2077,7 @@
                         ease: 'power2.out',
                         onUpdate: function() {
                             const currentValue = Math.round(priceObj.value);
-                            priceElement.innerHTML = `$${currentValue}<span>/par</span>`;
+                            priceElement.innerHTML = `$${currentValue}<span>${originalSpanText}</span>`;
                         }
                     }, '-=0.4');
 
